@@ -3,6 +3,7 @@
 namespace Tests\WeatherKata;
 
 use WeatherKata\Forecast;
+use WeatherKata\City;
 use PHPUnit\Framework\TestCase;
 
 class WeatherTest extends TestCase
@@ -35,7 +36,7 @@ class WeatherTest extends TestCase
         $forecast = new Forecast();
         $city = "Madrid";
 
-        $prediction = $forecast->predict($city, null, true);
+        $prediction = $forecast->predict($city, new \DateTime(), true);
 
         $this->assertEquals(60.0, $prediction);
     }
@@ -43,12 +44,12 @@ class WeatherTest extends TestCase
     /** @test */
     public function change_the_city_to_woeid()
     {
-        $forecast = new Forecast();
-        $city = "Madrid";
+        $cityName = "Madrid";
+        $city = new City($cityName);
 
-        $forecast->predict($city, null, true);
+        $cityId = $city->getID();
 
-        $this->assertEquals("766273", $city);
+        $this->assertEquals("766273", $cityId);
     }
 
     /** @test */
